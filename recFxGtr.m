@@ -13,9 +13,6 @@ durationSecs = 30;
 Fs = 22050; 
 [audioObj, y] = realTimeAudio(durationSecs,Fs); 
 
-figure(2)
-plot(linspace(1,durationSecs,length(y)), y,'r')
-
 % Save audio object and its audio data
 rawGtr = struct('obj',audioObj,'data',y); 
 save(fileName, 'rawGtr')
@@ -27,9 +24,9 @@ save(fileName, 'rawGtr')
 % Run it with the example file to see it in action
 % compare the "original" and "processed" output .wav files
 
-fileName = 'the_turtles.mat'; % example file "The Turtles - Happy Together" (comment this line when you're ready to work on your own recording)
-
-close all; clc
+fileName = 'example_track.mat'; % example file (comment this line when you're ready to work on your own recording)
+ 
+clear sound; close all; clc
 
 play = true; % play processed file at the end?
 
@@ -48,7 +45,7 @@ if(overdrive)
     d = ovd(0.9,d);
 end
 if(flanger)
-    d = flange(rawGtr.obj.SampleRate,0.002,d,0.5);
+    d = flange(rawGtr.obj.SampleRate,0.002,d,0.25);
 end 
 if(wah)
     d = wwp(d, rawGtr.obj.SampleRate,rawGtr.obj.TotalSamples);
